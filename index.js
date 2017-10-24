@@ -18,6 +18,8 @@ class WheelGame {
 
 	//loads hint, blank spaces, and letter lists
 	start(){
+		this.guessed = [];
+		this.correct = [];
 		for (var i = 0; i < this.answer.length; i++) {
 			if (this.answer[i] !== ' ') {
 				$(`#gr${i}`).css('visibility', 'visible');
@@ -38,36 +40,48 @@ class WheelGame {
 			}
 			this.correct.push(letter);
 			this.guessed.push(letter);
-		}else{
+
+			}else{
 			this.guessed.push(letter);
 		}
+
+		this.displayConsonants();
+		this.displayVowels();
+		this.gameWon();
 	}
 
 	phraseGuess(phrase){
 		if (phrase === this.answer) {
-			console.log('Win');
+			this.gameWon();
 		}else{
-			console.log('fail');
+			alert('Wrong!');
 		}
 	}
 
+	gameWon(){
+
+	}
 
 	displayConsonants() {
   	$('#consonants').empty();
-  	// $('#consonants').append(`<div class="col" style="color: red; font-size: 3em;">Consonants:</div>`);
 
   	for (var i = 0; i < this.consArray.length; i++) {
-    	$('#consonants').append(`<div class="col" style="color: red; font-size: 3em;" data.letter="${this.consArray[i]}"> ${this.consArray[i]}</div>`);
+  		if (!this.guessed.includes(this.consArray[i])){
+  			$('#consonants').append(`<div class="col" style="color: red; font-size: 3em;" data-letter='${this.consArray[i]}'> ${this.consArray[i]}</div>`);
+  		}
     }
   }
 
   displayVowels() {
   	$('#vowels').empty();
-  	// $('#vowels').append(`<div class="col-2" style="color: red; font-size: 3em;">Vowels:</div>`);
+
   	for (var i = 0; i < this.vowelArray.length; i++) {
-    	$('#vowels').append(`<div class="col" style="color: red; font-size: 3em;" data.letter="${this.vowelArray[i]}"> ${this.vowelArray[i]}</div>`);
+  		if (!this.guessed.includes(this.vowelArray[i])){
+  			$('#vowels').append(`<div class="col" style="color: red; font-size: 3em;" data-letter="${this.vowelArray[i]}"> ${this.vowelArray[i]}</div>`);
+  		}
     }
   }
+
 } //ends WheelGame
 
 
@@ -77,29 +91,21 @@ $(document).ready(function() {
 
 	unfortunate.start();
 
-	$(document).on('click', '#consonants', function(){
-		console.log($(this).data.letter);
-		let blinger = $(this).val();
-		console.log(blinger);
-		// console.log(letter);
-		// unfortunate.guess(letter);
+	$(document).on('click', '.col', function(){
+		let letter = $(this).data('letter');
+		unfortunate.guess(letter);
 	});
+
+
+	$('#solve1').click(function(){
+		$('#solveShow1').css('visibility', 'visible');
+	})
 
 	$('#solveSubmit1').click(function(){
 		let guess_it = $('#solveIt1').val().toUpperCase();
 		console.log(guess_it);
 		unfortunate.phraseGuess(guess_it);
 	})
-
-
-	unfortunate.guess('O');
-	unfortunate.guess('I');
-	unfortunate.guess('E');
-	unfortunate.guess('D');
-	unfortunate.guess('B');
-	unfortunate.guess('N');
-
-	console.log()
 
 
 }); // End of Document Ready Function
