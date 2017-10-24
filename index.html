@@ -18,17 +18,20 @@
 
       <div class="row" id="header">
         <h1>Wheels Against Humanity</h1>
-        
-       </div><!--end header -->
+      </div>
 
       <div class="row" id="black">
-        <div id="hint">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+        <div id="hint"></div>
       </div>
 
       <div class="row" id="white">
         <div class="col">
-          <div class="guessrow" id="gr1">A</div>
-          <div class="guessrow" id="gr13">b</div>
+          <div class="guessrow" id="gr0"></div>
+          <div class="guessrow" id="gr12"></div>
+        </div>
+        <div class="col">
+          <div class="guessrow" id="gr1"></div>
+          <div class="guessrow" id="gr13"></div>
         </div>
         <div class="col">
           <div class="guessrow" id="gr2"></div>
@@ -70,41 +73,10 @@
           <div class="guessrow" id="gr11"></div>
           <div class="guessrow" id="gr23"></div>
         </div>
-        <div class="col">
-          <div class="guessrow" id="gr12"></div>
-          <div class="guessrow" id="gr24"></div>
-        </div>
       </div> <!--end white-->
       
-      <div class="row" id="letters">
-        <div class="consonants">Consonants:</div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="consonants"></div>
-        <div class="col vowels"></div>
-        <div class="col vowels"></div>
-        <div class="col vowels"></div>
-        <div class="col vowels"></div>
-        <div class="col vowels"></div>
-      </div>
+      <div class="row letters" id="consonants"></div>
+      <div class="row letters" id="vowels"></div>
 
       <div class="row" id="players">
 
@@ -113,9 +85,9 @@
             <button type="button" class="btn btn-secondary" class="spin">Spin</button>
             <button type="button" class="btn btn-dark" class="buy">Buy Vowel</button>
             <button type="button" class="btn btn-secondary" class="solve">Solve</button>
-            <div class="solveIt">
-              <input type="text">
-              <button type="button" class="btn btn-dark" class="solveSubmit">Solve It!</button>
+            <div id="solveIt">
+              <input type="text" class="solveText" id="solveIt1">
+              <button type="button" class="btn btn-dark" id="solveSubmit1">Solve It!</button>
             </div>
           </div>
         </div>
