@@ -97,3 +97,11 @@
 	visibility: hidden;
 }
 
+#wrong0 {
+	/*width: 30%;*/
+	/*height: auto;*/
+	display: inline-block;
+	background-image: url('winfist.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
