@@ -1,5 +1,7 @@
-const hintArray = ["I DRINK TO FORGET", " Testing Testing"];
-const wordArray = ["TEST AGAIN", "DROWNING IN DEBT"];
+//these are from the game, cards against humanity, which i realized after the fact is perhaps not that appropriate. oh well.
+
+const hintArray = ["I DRINK TO FORGET", " THE RED LINE WILL BE DELAYED DUE TO"];
+const wordArray = ["ALCOHOLISM", "DROWNING IN DEBT"];
 
 class WheelGame {
 
@@ -28,8 +30,6 @@ class WheelGame {
 
 	//loads hint, blank spaces, and letter lists
 	start(){
-		this.guessed = [];
-		this.correct = [];
 		this.guesses = 3;
 		for (var i = 0; i < this.answer.length; i++) {
 			if (this.answer[i] !== ' ') {
@@ -67,7 +67,8 @@ class WheelGame {
 
 	phraseGuess(phrase){
 		if (phrase === this.answer) {
-			alert('Congrats! You have won!');
+			this.correct = this.winner;
+			this.gameWon();
 		}else{
 			alert('Wrong!');
 			this.guesses--;
@@ -77,9 +78,7 @@ class WheelGame {
 	gameWon(){
 		if (this.correct.length === this.winner.length) {
 			alert('Congrats! You have won!');
-		}
-
-		if (this.guesses === 0) {
+		}else if (this.guesses === 0) {
 			alert('You have lost');
 		}
 	}
@@ -104,8 +103,34 @@ class WheelGame {
     }
   }
 
+  //not working yet
   newGame(){
-  	
+  	this.hint = hintArray[Math.floor(Math.random()*(hintArray.length))];
+		this.answer = wordArray[Math.floor(Math.random()*(wordArray.length))];
+
+		this.answerArray = this.answer.split('');
+
+		this.noSpace = this.answerArray.filter(function(str) {
+    	return /\S/g.test(str);
+  	}); //filters out blank spaces
+
+  	this.winner = this.noSpace.filter(function(elem, index, self){
+      return index == self.indexOf(elem); 
+    }); // filters out duplicate letters
+
+		this.guessed = [];
+		this.correct = [];
+
+		this.guesses = 3;
+		for (var i = 0; i < this.answer.length; i++) {
+			if (this.answer[i] !== ' ') {
+				$(`#gr${i}`).css('visibility', 'visible');
+			}
+		}
+
+		$('#hint').text(this.hint);
+		this.displayConsonants();
+		this.displayVowels();
   }
 
 } //ends WheelGame
