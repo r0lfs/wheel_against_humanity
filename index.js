@@ -7,6 +7,16 @@ class WheelGame {
 		this.hint = hintArray[Math.floor(Math.random()*(hintArray.length))];
 		this.answer = wordArray[Math.floor(Math.random()*(wordArray.length))];
 
+		this.answerArray = this.answer.split('');
+
+		this.noSpace = this.answerArray.filter(function(str) {
+    	return /\S/g.test(str);
+  	}); //filters out blank spaces
+
+  	this.winner = this.noSpace.filter(function(elem, index, self){
+      return index == self.indexOf(elem); 
+    }); // filters out duplicate letters
+
 		this.guessed = [];
 		this.correct = [];
 
@@ -20,6 +30,7 @@ class WheelGame {
 	start(){
 		this.guessed = [];
 		this.correct = [];
+		this.guesses = 3;
 		for (var i = 0; i < this.answer.length; i++) {
 			if (this.answer[i] !== ' ') {
 				$(`#gr${i}`).css('visibility', 'visible');
@@ -43,8 +54,12 @@ class WheelGame {
 
 			}else{
 			this.guessed.push(letter);
+			this.guesses--;
 		}
 
+		if (this.guesses === 0) {
+			alert('Game Over!');
+		}
 		this.displayConsonants();
 		this.displayVowels();
 		this.gameWon();
@@ -52,14 +67,21 @@ class WheelGame {
 
 	phraseGuess(phrase){
 		if (phrase === this.answer) {
-			this.gameWon();
+			alert('Congrats! You have won!');
 		}else{
 			alert('Wrong!');
+			this.guesses--;
 		}
 	}
 
 	gameWon(){
+		if (this.correct.length === this.winner.length) {
+			alert('Congrats! You have won!');
+		}
 
+		if (this.guesses === 0) {
+			alert('You have lost');
+		}
 	}
 
 	displayConsonants() {
@@ -80,6 +102,10 @@ class WheelGame {
   			$('#vowels').append(`<div class="col" style="color: red; font-size: 3em;" data-letter="${this.vowelArray[i]}"> ${this.vowelArray[i]}</div>`);
   		}
     }
+  }
+
+  newGame(){
+  	
   }
 
 } //ends WheelGame
