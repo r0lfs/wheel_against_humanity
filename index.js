@@ -43,7 +43,6 @@ class WheelGame {
 		}
 		$('.current_round').text(this.round);
 		$('.guesses_left').text(this.guesses);
-		console.log(this.answer);
 		$('#hint').text(this.hint);
 		this.displayConsonants();
 		this.displayVowels();
@@ -88,7 +87,7 @@ class WheelGame {
 			alert('Wrong!');
 			this.guesses--;
 			$('.guesses_left').text(this.guesses);
-			$('#solveIt1').empty();
+			$('#solveIt1').val('');
 			this.gameWon();
 		}
 	}
@@ -166,7 +165,6 @@ $(document).ready(function() {
 
 	$('.letters').on('click', '.col', function(){
 		let letter = $(this).data('letter');
-		console.log(letter);
 		unfortunate.guess(letter);
 	});
 
@@ -177,7 +175,6 @@ $(document).ready(function() {
 
 	$('#solveSubmit1').click(function(){
 		let guess_it = $('#solveIt1').val().toUpperCase();
-		console.log(guess_it);
 		unfortunate.phraseGuess(guess_it);
 	})
 
