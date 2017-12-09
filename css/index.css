@@ -105,3 +105,11 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
+.buy {
+	visibility: hidden;
+}
+
+.spin {
+	visibility: hidden;
+}

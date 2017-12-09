@@ -1,7 +1,7 @@
 //these are from the game, cards against humanity, which i realized after the fact is perhaps not that appropriate. oh well.
 
-const hintArray = ["I DRINK TO FORGET", " THE RED LINE WILL BE DELAYED DUE TO"];
-const wordArray = ["ALCOHOLISM", "DROWNING IN DEBT"];
+const hintArray = ["I DRINK TO FORGET", "THE RED LINE WILL BE DELAYED DUE TO", "SOMETHING ROLF HATES", "I TRIED DOING THIS IN COFFEESCRIPT, BUT IT DIDN'T"];
+const wordArray = ["ALCOHOLISM", "DROWNING IN DEBT", "JAVASCRIPT", "WORK"];
 
 class WheelGame {
 
@@ -22,6 +22,7 @@ class WheelGame {
 		this.guessed = [];
 		this.correct = [];
 
+		this.round = 1;
 
 		this.consArray = ['B', 'C', 'D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'];
 		this.vowelArray = ['A','E','I','O','U'];
@@ -31,15 +32,26 @@ class WheelGame {
 	//loads hint, blank spaces, and letter lists
 	start(){
 		this.guesses = 3;
+		for (var i = 0; i < 24 ; i++) {
+			$(`#gr${i}`).empty();
+			$(`#gr${i}`).css('visibility', 'hidden');
+		}
 		for (var i = 0; i < this.answer.length; i++) {
 			if (this.answer[i] !== ' ') {
 				$(`#gr${i}`).css('visibility', 'visible');
 			}
 		}
-
+		$('.current_round').text(this.round);
+		$('.guesses_left').text(this.guesses);
+		console.log(this.answer);
 		$('#hint').text(this.hint);
 		this.displayConsonants();
 		this.displayVowels();
+
+		let hint_index = hintArray.indexOf(this.hint);
+		hintArray.splice(hint_index, 1);
+		let word_index = wordArray.indexOf(this.answer);
+		wordArray.splice(word_index, 1);
 	}
 
 	guess(letter){
@@ -55,10 +67,12 @@ class WheelGame {
 			}else{
 			this.guessed.push(letter);
 			this.guesses--;
+			$('.guesses_left').text(this.guesses);
 		}
 
 		if (this.guesses === 0) {
 			alert('Game Over!');
+			this.newGame();
 		}
 		this.displayConsonants();
 		this.displayVowels();
@@ -68,19 +82,26 @@ class WheelGame {
 	phraseGuess(phrase){
 		if (phrase === this.answer) {
 			this.correct = this.winner;
+			$('#solveIt1').val('');
 			this.gameWon();
 		}else{
 			alert('Wrong!');
 			this.guesses--;
+			$('.guesses_left').text(this.guesses);
+			$('#solveIt1').empty();
+			this.gameWon();
 		}
 	}
 
 	gameWon(){
 		if (this.correct.length === this.winner.length) {
 			alert('Congrats! You have won!');
+			this.newGame();
 		}else if (this.guesses === 0) {
 			alert('You have lost');
+			this.newGame();
 		}
+		
 	}
 
 	displayConsonants() {
@@ -105,32 +126,33 @@ class WheelGame {
 
   //not working yet
   newGame(){
-  	this.hint = hintArray[Math.floor(Math.random()*(hintArray.length))];
-		this.answer = wordArray[Math.floor(Math.random()*(wordArray.length))];
+	  if (hintArray.length !== 0) {	
+	  	this.round += 1
 
-		this.answerArray = this.answer.split('');
+	  	this.guessed = [];
+			this.correct = [];
 
-		this.noSpace = this.answerArray.filter(function(str) {
-    	return /\S/g.test(str);
-  	}); //filters out blank spaces
+	  	this.consArray = ['B', 'C', 'D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'];
+			this.vowelArray = ['A','E','I','O','U'];
 
-  	this.winner = this.noSpace.filter(function(elem, index, self){
-      return index == self.indexOf(elem); 
-    }); // filters out duplicate letters
+			this.hint = hintArray[Math.floor(Math.random()*(hintArray.length))];
+			this.answer = wordArray[Math.floor(Math.random()*(wordArray.length))];
 
-		this.guessed = [];
-		this.correct = [];
+			this.answerArray = this.answer.split('');
 
-		this.guesses = 3;
-		for (var i = 0; i < this.answer.length; i++) {
-			if (this.answer[i] !== ' ') {
-				$(`#gr${i}`).css('visibility', 'visible');
-			}
-		}
+			this.noSpace = this.answerArray.filter(function(str) {
+	    	return /\S/g.test(str);
+	  	}); //filters out blank spaces
 
-		$('#hint').text(this.hint);
-		this.displayConsonants();
-		this.displayVowels();
+	  	this.winner = this.noSpace.filter(function(elem, index, self){
+	      return index == self.indexOf(elem); 
+	    }); // filters out duplicate letters
+	    this.start();
+	  }else{
+	  	alert("That's it. That's all folks. I don't feel like coming up with more words so it's over. You can refresh to play again, and the answers might change relative to the hint, but they'll still be the same.")
+	  	$('div').hide();
+	  	document.body.style.backgroundImage = "url('css/game_over.gif')";
+	  }
   }
 
 } //ends WheelGame
@@ -142,8 +164,9 @@ $(document).ready(function() {
 
 	unfortunate.start();
 
-	$(document).on('click', '.col', function(){
+	$('.letters').on('click', '.col', function(){
 		let letter = $(this).data('letter');
+		console.log(letter);
 		unfortunate.guess(letter);
 	});
 
@@ -158,5 +181,8 @@ $(document).ready(function() {
 		unfortunate.phraseGuess(guess_it);
 	})
 
+	$('#newGame').click(function(){
+		unfortunate.newGame();
+	})
 
 }); // End of Document Ready Function

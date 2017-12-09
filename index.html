@@ -81,9 +81,14 @@
       <div class="row" id="players">
 
         <div class="col" id="player1">
+          <div class="round">
+            Round: <p class="current_round"></p>
+          </div>
+          <div class="guesses">
+            Guesses: <p class="guesses_left"></p>
+          </div>
           <div class="buttons">
-            <button type="button" class="btn btn-secondary" class="spin">Spin</button>
-            <button type="button" class="btn btn-dark" class="buy">Buy Vowel</button>
+            <button type="button" class="btn btn-dark" id="newGame">New Game</button>
             <button type="button" class="btn btn-secondary" class="solve" id="solve1">Solve</button>
             <div class="solveIt" id="solveShow1">
               <input type="text" id="solveIt1">
@@ -93,30 +98,6 @@
           <div class='fist' id="wrong0"></div>
           <div class='fist' id="wrong1"></div>
           <div class='fist' id="wrong2"></div>
-        </div>
-
-        <div class="col" id="player2">
-          <div class="buttons">
-            <button type="button" class="btn btn-secondary" class="spin">Spin</button>
-            <button type="button" class="btn btn-dark" class="buy">Buy Vowel</button>
-            <button type="button" class="btn btn-secondary" class="solve">Solve</button>
-            <div class="solveIt">
-              <input type="text">
-              <button type="button" class="btn btn-dark" class="solveSubmit">Solve It!</button>
-           </div>
-          </div>
-        </div>
-
-        <div class="col" id="player3">
-          <div class="buttons">
-            <button type="button" class="btn btn-secondary" class="spin">Spin</button>
-            <button type="button" class="btn btn-dark" class="buy">Buy Vowel</button>
-            <button type="button" class="btn btn-secondary" class="solve">Solve</button>
-            <div class="solveIt">
-              <input type="text">
-              <button type="button" class="btn btn-dark" class="solveSubmit">Solve It!</button>
-            </div>
-          </div>
         </div>
 
       </div> <!--end players-->
